@@ -14,4 +14,5 @@ class DoubanscrapyItem(scrapy.Item):
     title = scrapy.Field()
     pub = scrapy.Field()
     star = scrapy.Field()
+    comment = scrapy.Field()
     desc = scrapy.Field()

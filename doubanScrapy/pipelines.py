@@ -20,19 +20,20 @@ class DbBookList(Base):
     title = Column(String(20))
     pub = Column(String(128))
     star = Column(String(128))
+    comment = Column(String(128))
     desc = Column(String(128))
 
 
 class DoubanscrapyPipeline(object):
     def __init__(self):
-        engine = create_engine('mysql+mysqlconnector://root:root@localhost:3306/doubandb')
+        engine = create_engine('mysql+mysqlconnector://root:root@localhost:8889/doubandb')
         # 创建DBSession类型:
         session = sessionmaker(bind=engine)
         self.session = session()
 
     def process_item(self, item, spider):
         # 创建新User对象:
-        new_user = DbBookList(title=str(item['title']), pub=str(item['pub']), star=str(item['star']), desc=str(item['desc']))
+        new_user = DbBookList(title=str(item['title']), pub=str(item['pub']), star=str(item['star']), comment=str(item['comment']), desc=str(item['desc']))
         # 添加到session:
         self.session.add(new_user)
 
