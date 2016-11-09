@@ -11,4 +11,7 @@ import scrapy
 class DoubanscrapyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    pub = scrapy.Field()
+    star = scrapy.Field()
+    desc = scrapy.Field()
