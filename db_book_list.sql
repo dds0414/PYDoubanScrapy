@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2016-11-10 17:36:28
+Date: 2016-11-11 17:53:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,8 +32,8 @@ CREATE TABLE `db_book_list` (
   `status` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `title` (`title`) USING BTREE,
-  KEY `tag_id` (`tag_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=1604 DEFAULT CHARSET=utf8;
+  KEY `tag_id` (`tag_id`,`title`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=5156 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for db_tag_list
@@ -46,4 +46,4 @@ CREATE TABLE `db_tag_list` (
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `status` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
