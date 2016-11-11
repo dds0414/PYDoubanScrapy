@@ -6,7 +6,9 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import time
 from model.BookListModel import DbBookList
+from model.TagNameModel import TagNameModel
 from model.CreateEngine import Engine
+from sqlalchemy.sql import and_
 
 
 class DoubanscrapyPipeline(object):
@@ -15,11 +17,10 @@ class DoubanscrapyPipeline(object):
 
     def process_item(self, item, spider):
         # 创建新User对象:
-        new_user = DbBookList(tag_id=str(item['tag_id']),title=str(item['title']), pub=str(item['pub']), star=str(item['star']),comment=str(item['comment']), desc=str(item['desc']), update_time=time.time())
-        d = self.session.query(DbBookList).filter(DbBookList.title == new_user.title).all()
+        new_user = DbBookList(tag_id=str(item['tag_id']), title=str(item['title']).strip(), pub=str(item['pub']), star=str(item['star']), comment=str(item['comment']), desc=str(item['desc']), update_time=time.time())
+        d = self.session.query(DbBookList).filter(DbBookList.tag_id == new_user.tag_id).filter(DbBookList.title == new_user.title).all()
         if len(d) > 0:
-            self.session.query(DbBookList).filter(DbBookList.title == new_user.title).update({
-                DbBookList.tag_id: new_user.tag_id,
+            self.session.query(DbBookList).filter(DbBookList.tag_id == new_user.tag_id).filter(DbBookList.title == new_user.title).update({
                 DbBookList.title: new_user.title,
                 DbBookList.pub: new_user.pub,
                 DbBookList.star: new_user.star,
@@ -32,6 +33,8 @@ class DoubanscrapyPipeline(object):
             new_user.create_time = item['create_time']
             self.session.add(new_user)
         # 提交即保存到数据库:
+        self.session.query(TagNameModel).filter(TagNameModel.id == new_user.tag_id).update({
+            TagNameModel.status: 0})
         self.session.commit()
 
     def __del__(self):

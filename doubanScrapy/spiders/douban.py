@@ -22,7 +22,7 @@ class DoubanSpider(scrapy.Spider):
     def __init__(self):
         super(DoubanSpider, self).__init__()
         self.session = Engine.createEng()
-        d = self.session.query(TagNameModel).all()
+        d = self.session.query(TagNameModel).filter(TagNameModel.status == 1).all()
         for i in d:
             self.start_urls += ('https://book.douban.com/tag/%s?start=0&type=T' % i.tag_name,)
 
@@ -40,7 +40,7 @@ class DoubanSpider(scrapy.Spider):
             value = re.findall(pattern, str(i))
             p = re.compile('<[^>]+>')
             item['tag_id'] = tag_value[0].id
-            item['title'] = p.sub("", value[0][0].replace('\n', '').replace(' ', ''))
+            item['title'] = p.sub("", value[0][0].replace('\n', '').replace('  ', ''))
             item['pub'] = value[0][1].replace('\n', '').strip()
             scValue = p.sub("", value[0][2].replace('\n', '').replace(' ', '').strip()).split("(")
             item['star'] = scValue[0]
