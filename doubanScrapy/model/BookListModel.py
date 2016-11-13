@@ -17,3 +17,4 @@ class DbBookList(Base):
     desc = Column(String(128))
     create_time = Column(String(128))
     update_time = Column(String(128))
+    status = Column(String(128))

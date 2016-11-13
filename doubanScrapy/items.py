@@ -8,7 +8,7 @@
 import scrapy
 
 
-class DoubanscrapyItem(scrapy.Item):
+class DoubanScrapyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     tag_id = scrapy.Field()
@@ -19,3 +19,11 @@ class DoubanscrapyItem(scrapy.Item):
     desc = scrapy.Field()
     create_time = scrapy.Field()
     update_time = scrapy.Field()
+
+
+class PanScrapyItem(scrapy.Item):
+    book_id = scrapy.Field()
+    title = scrapy.Field()
+    href = scrapy.Field()
+    desc = scrapy.Field()
+

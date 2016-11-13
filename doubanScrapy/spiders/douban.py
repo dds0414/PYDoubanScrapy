@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from doubanScrapy.items import DoubanscrapyItem
+from doubanScrapy.items import DoubanScrapyItem
 from bs4 import BeautifulSoup
 import re
 from scrapy.http import Request
@@ -33,7 +33,7 @@ class DoubanSpider(scrapy.Spider):
         soup = BeautifulSoup(data, 'lxml')
         list_value = soup.find_all('li', 'subject-item')
         for i in list_value:
-            item = DoubanscrapyItem()
+            item = DoubanScrapyItem()
             pattern = re.compile(
                 '<li.*?<div class="info">.*?<a.*?>(.*?)</a>.*?<div class="pub">(.*?)</div>.*?<div class="star clearfix">(.*?)</div>(.*?)<div',
                 re.S)
@@ -51,5 +51,4 @@ class DoubanSpider(scrapy.Spider):
             yield item
         sel = response.xpath("//div[@class='paginator']/a/@href").extract()
         for s in sel:
-            # print response.url.split("?")[1].split("&")[0], "->", s.split("?")[1].split("&")[0]
             yield Request(self.baseURL + s, callback=self.parse)

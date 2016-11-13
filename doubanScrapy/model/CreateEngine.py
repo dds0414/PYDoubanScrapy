@@ -10,7 +10,7 @@ class Engine:
     @staticmethod
     def createEng():
 
-        engine = create_engine('mysql+mysqlconnector://root:@localhost:3306/doubandb')
+        engine = create_engine('mysql+mysqlconnector://root:root@localhost:8889/doubandb')
         # 创建DBSession类型:
         session = sessionmaker(bind=engine)
         return session()
